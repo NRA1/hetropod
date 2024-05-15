@@ -1,0 +1,8 @@
+[Addon]
+Name=Hetropod
+Category=InputMethod
+Version=@PROJECT_VERSION@
+Library=hetropod
+Type=SharedLibrary
+OnDemand=True
+Configurable=False
