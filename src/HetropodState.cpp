@@ -141,6 +141,9 @@ void HetropodState::keyEvent(KeyEvent &keyEvent)
                         if(!ch->initial_.has_value())
                         {
                             ch->initial_ = c;
+
+                            if(preedit_.empty())
+                                preedit_.emplace_back(*ch);
                         } else
                         {
                             if(!ch->medial_.has_value())
@@ -148,6 +151,7 @@ void HetropodState::keyEvent(KeyEvent &keyEvent)
                             commitFirst();
                             preedit_.emplace_back(c.value());
                         }
+
                     } else FCITX_WARN() << "Entered a key specified in Keyboard but unspecified in Alphabet!";
                 }
                 else
@@ -289,7 +293,11 @@ void HetropodState::keyEvent(KeyEvent &keyEvent)
         }
 
         keyEvent.filterAndAccept();
-    } else
+    } else if(keyEvent.key().isModifier())
+    {
+        return;
+    }
+    else
     {
         commit();
     }
